@@ -1,12 +1,21 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function HomePage() {
   return (
-    <div className="min-h-screen bg-primary-50 flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-primary-600 mb-4">Welcome to Contaxt</h1>
-        <p className="text-xl text-primary-800">Your Project Management Solution</p>
-      </div>
+    <div className="container mx-auto px-4 py-12 text-center">
+      <h1 className="text-4xl font-bold text-primary-600 mb-6">
+        VI-SUPERMAN Project Management
+      </h1>
+      <p className="text-xl text-gray-700 mb-8">
+        Empowering teams with seamless project collaboration
+      </p>
+      <Link 
+        to="/login" 
+        className="bg-primary-500 text-white px-6 py-3 rounded-lg hover:bg-primary-600 transition"
+      >
+        Get Started
+      </Link>
     </div>
   )
 }
