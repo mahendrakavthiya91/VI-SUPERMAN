@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -18,6 +18,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -29,15 +32,13 @@ jobs:
 
       - name: Build project
         run: npm run build
-        continue-on-error: true
 
       - name: Deploy to GitHub Pages
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}   # or ${{ secrets.GH_PAGES_TOKEN }} to test a PAT
           publish_dir: ./dist
-        continue-on-error: true
 
       - name: Comment on PR
         if: github.event_name == 'pull_request'
@@ -50,7 +51,6 @@ jobs:
               repo: context.repo.repo,
               body: '✅ Build successful! Preview will be available after merge to main.'
             })
-        continue-on-error: true
 
       - name: Build status
         run: |
